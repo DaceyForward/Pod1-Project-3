@@ -67,7 +67,7 @@ font-family: 'Josefin Sans', sans-serif;
 ![app wireframe4](https://i.imgur.com/UFTbF3Z.png)
 
 ## ERD
-![app erd](https://i.imgur.com/U1qay1h.png)
+![app erd](https://i.imgur.com/LVPzJFT.png)
 
 ## MVP SHOWCASE
 ![app home](https://i.imgur.com/fh76yAV.png)
