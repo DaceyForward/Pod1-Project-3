@@ -85,6 +85,6 @@ font-family: 'Josefin Sans', sans-serif;
 - Google Maps API to show addresses
 
 ### Deployed App
-Birthday Blaster
+Birthday Blaster: https://birthdayblaster.onrender.com/
 
 
