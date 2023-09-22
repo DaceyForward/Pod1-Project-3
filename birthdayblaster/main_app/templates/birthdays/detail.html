@@ -16,14 +16,7 @@
       <input type="file" name="photo-file" class="choosefile">
       <br><br>
 
-      <button type="submit" class="btn" id="upload">Upload Photo</button>
-      </form>
-    </div>
-      <h5 class="center-align">{{ birthday.first_name }} {{ birthday.last_name }}</h5>
-      <p class="center-align">Birthday Day: {{ birthday.date }}</p>
-      <p class="center-align">{{ birthday.relationship }}</p>
-      <p>Notes about {{birthday.first_name}}: {{birthday.notes}}</p>
-  </div>
+
 
 
       <button type="submit" class="btn white-text center-align #fdd835 yellow darken-1" id="upload">Upload Photo</button>
@@ -47,14 +40,12 @@
 <div class="col s6">
 
   <h3>Celebrate {{birthday.first_name }}!</h3>
-  <p>List some gift ideas or some of your favorite things about {{birthday.first_name }}</p>
+  <p class="bday-info center-align">List some gift ideas or some of your favorite things about {{birthday.first_name }}</p>
     {% for idea in birthday.giftidea_set.all %}
 
-  <h3>Show {{birthday.first_name }} some love!</h3>
-  <p class="bday-info center-align">List some gift ideas or your favorite things about {{birthday.first_name }}!</p>
 
-  {% if ideas.count %}
-    {% for idea in ideas.all %}
+
+  
 
       <div class="card">
         <div class="card-content">
@@ -93,8 +84,6 @@
 <p>Phone Number: {{birthday.phone_number}}</p>
 {% endif %}
 
-<a href="{% url 'gifts_create' birthday.id %}" class="waves-effect waves-light btn #ff80ab pink accent-1" id="navlist">Add A Gift Idea</a>
-<br>
-<br>
+
 
 {% endblock %}

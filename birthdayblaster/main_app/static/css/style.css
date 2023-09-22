@@ -160,3 +160,7 @@ background-color: #daedb3 !important;
 .active {
     color: gray !important;
 }
+
+.sidenav-overlay {
+    display: none !important;
+}
