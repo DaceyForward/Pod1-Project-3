@@ -31,7 +31,6 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = 'django-insecure-xm39)z4s#-)%pz3gibg!2s+5htg-8d6s6qkk8m791va=7lch8^'
 SECRET_KEY = env('SECRET_KEY')
 
