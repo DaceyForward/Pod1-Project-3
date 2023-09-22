@@ -25,7 +25,7 @@ class BirthdayReminderTestCase(TestCase):
             username="testuser",
             password="testpassword",
             ###
-            email="srtm88@gmail.com"  ### Test email address to receive test email notification ###
+            email="dacey.loving@gmail.com"  ### Test email address to receive test email notification ###
             ###
         )
 
