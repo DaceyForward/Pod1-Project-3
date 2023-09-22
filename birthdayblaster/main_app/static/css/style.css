@@ -147,6 +147,10 @@ label {
     color: gray;
 }
 
+.btn{
+background-color: #daedb3 !important;
+}
+
 .bday-info2 {
     font-size: 4vmin;
     color: #ff92df;

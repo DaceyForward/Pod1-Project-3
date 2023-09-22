@@ -6,15 +6,26 @@
 <h1 class="center-align">{{ birthday.first_name }}'s Birthday!</h1>
   <div class="card">
     <div class="card-content" id="bday">
-    {% for photo in birthday.photo_set.all %}
+      {% for photo in birthday.photo_set.all %}
       <img id="avatar" class="center-align circle responsive-img"  src="{{photo.url}}">
-    {% empty %}
+      {% empty %}
       <div class="card-panel teal-text center-align">No Photos Uploaded</div>
-    {% endfor %}
-    <form action="{% url 'add_photo' birthday.id %}" enctype="multipart/form-data" method="POST" class="" id="photoupload">
+      {% endfor %}
+      <form action="{% url 'add_photo' birthday.id %}" enctype="multipart/form-data" method="POST" class="" id="photoupload">
       {% csrf_token %}
       <input type="file" name="photo-file" class="choosefile">
       <br><br>
+
+      <button type="submit" class="btn" id="upload">Upload Photo</button>
+      </form>
+    </div>
+      <h5 class="center-align">{{ birthday.first_name }} {{ birthday.last_name }}</h5>
+      <p class="center-align">Birthday Day: {{ birthday.date }}</p>
+      <p class="center-align">{{ birthday.relationship }}</p>
+      <p>Notes about {{birthday.first_name}}: {{birthday.notes}}</p>
+  </div>
+
+
       <button type="submit" class="btn white-text center-align #fdd835 yellow darken-1" id="upload">Upload Photo</button>
     </form>
   </div>
@@ -24,26 +35,31 @@
       <p class="bday-info center-align">NOTES: {{birthday.notes}} {{birthday.delivery_method}}</p>
   </div>
 <br>
+
   <div class="card-action center-align">
     <a href="{% url 'birthdays_update' birthday.id %}" class="waves-effect waves-light btn-large #448aff blue accent-2">Edit</a>
     <a href="{% url 'birthdays_delete' birthday.id %}" class="waves-effect waves-light btn-large #ff80ab pink accent-1">Delete</a>
   </div>
   <br>
   <hr>
-    
   
-
-
+  
 <div class="col s6">
+
+  <h3>Celebrate {{birthday.first_name }}!</h3>
+  <p>List some gift ideas or some of your favorite things about {{birthday.first_name }}</p>
+    {% for idea in birthday.giftidea_set.all %}
+
   <h3>Show {{birthday.first_name }} some love!</h3>
   <p class="bday-info center-align">List some gift ideas or your favorite things about {{birthday.first_name }}!</p>
 
   {% if ideas.count %}
     {% for idea in ideas.all %}
+
       <div class="card">
         <div class="card-content">
           <span class="card-title">
-            <p>{{ idea.ideas}}</p>
+            <p>{{ idea.ideas }}</p>
           </span>
         </div>
         <div class="card-action">
@@ -54,12 +70,31 @@
         </div>
       </div>
     {% endfor %}
-  {% else %}
-    <h5>{{cat.name}} Already Has All Toys Available</h5>
-  {% endif %}
 </div>
+
+
+<form action="{% url 'add_giftidea' birthday.id %}" method="POST">
+  {% csrf_token %}
+  <!-- Render the inputs -->
+  {{ giftidea_form.as_p }}
+  <input type="submit" class="btn" value="Add a gift idea">
+</form>
+
+
+<p>Ways to contact {{birthday.first_name}}:</p>
+<hr>
+{% if birthday.address %}
+<p>Address:{{birthday.address}}</p>
+{% endif %}
+{% if birthday.email %}
+<p>Email: {{birthday.email}}</p>
+{% endif %}
+{% if birthday.phone_number %}
+<p>Phone Number: {{birthday.phone_number}}</p>
+{% endif %}
 
 <a href="{% url 'gifts_create' birthday.id %}" class="waves-effect waves-light btn #ff80ab pink accent-1" id="navlist">Add A Gift Idea</a>
 <br>
 <br>
+
 {% endblock %}

@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from.models import Birthday, GiftIdea, Photo
+from.forms import GiftIdeaForm
 
 import uuid
 import boto3
@@ -37,12 +38,11 @@ def birthdays_index(request):
 @login_required
 def birthdays_detail(request, birthday_id):
   birthday = Birthday.objects.get(id=birthday_id)
-  id_list = birthday.ideas.all().values_list('id')
-  ideas_to_add = GiftIdea.objects.exclude(id__in=id_list)
-  print(id_list)
+  giftidea_form = GiftIdeaForm()
+  
   
 
-  return render(request, 'birthdays/detail.html', { 'birthday': birthday, 'ideas':ideas_to_add })
+  return render(request, 'birthdays/detail.html', { 'birthday': birthday, 'giftidea_form': giftidea_form})
 
 
 def signup(request):
@@ -74,8 +74,6 @@ class BirthdayCreate(LoginRequiredMixin, CreateView):
   def form_valid(self, form):
     form.instance.user = self.request.user 
     return super().form_valid(form)
-  
-  
 
 class BirthdayUpdate(LoginRequiredMixin, UpdateView):
   model = Birthday
@@ -84,40 +82,7 @@ class BirthdayUpdate(LoginRequiredMixin, UpdateView):
 
 class BirthdayDelete(LoginRequiredMixin, DeleteView):
   model = Birthday
-  success_url = '/birthdays'
-
-
-class GiftList(LoginRequiredMixin, ListView):
-   model=GiftIdea
-   template_name= 'gifts/detail.html'
-
-class GiftDetail(LoginRequiredMixin, DeleteView):
-   model=GiftIdea
-
-class GiftCreate(LoginRequiredMixin, CreateView):
-   model= GiftIdea
-   fields = '__all__'
-   success_url = '/birthdays'
-
-   def form_valid(self, form):
-    form.instance.user = self.request.user 
-    birthday_id = self.kwargs['birthday_id']
-    new_gift= form.save(commit=False)
-    print('FORM', new_gift)
-    Birthday.objects.get(id=birthday_id).ideas.add(new_gift)
-    # form.instance.ideas = self.request.birthday
-    return super().form_valid(form)
-
-class GiftUpdate(LoginRequiredMixin, UpdateView):
-   model=GiftIdea
-   fields= '__all__'
-   success_url = '/gifts'
-
-
-class GiftDelete(LoginRequiredMixin, DeleteView):
-   model = GiftIdea
-   success_url = '/gifts'
-               
+  success_url = '/birthdays'            
 
 # Create your views here.
 
@@ -143,8 +108,14 @@ def add_photo(request, birthday_id):
             print(e)
     return redirect('detail', birthday_id=birthday_id)
 
-
-def assoc_idea(request, birthday_id, giftideas_id):
-  # Note that you can pass a toy's id instead of the whole toy object
-    Birthday.objects.get(id=birthday_id).ideas.add(giftideas_id)
-    return redirect('detail', birthday_id=birthday_id)
+def add_giftidea(request, birthday_id):
+  # create a ModelForm instance using the data in request.POST
+  form = GiftIdeaForm(request.POST)
+  # validate the form
+  if form.is_valid():
+    # don't save the form to the db until it
+    # has the cat_id assigned
+    new_giftidea= form.save(commit=False)
+    new_giftidea.birthday_id = birthday_id
+    new_giftidea.save()
+  return redirect('detail', birthday_id=birthday_id)
