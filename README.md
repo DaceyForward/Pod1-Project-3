@@ -12,9 +12,11 @@ Birthday Blaster is a fun and festive event reminder application, designed to he
 #### Technology Used:
 - Python
 - Django
+- JavaScript
 - HTML
 - CSS
-- AWS S3
+- Materialize
+- AWS
 - API
 
 ## User Stories
